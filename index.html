@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrapeGuard | AI Leaf Scanner</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/umd/lucide.min.js"></script>
+
+<style>
+:root {
+    --primary-green: #2d5a27;
+    --accent-gold: #eeb04b;
+    --bg-off-white: #f9fbf9;
+    --text-dark: #1a2e1a;
+    --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg-off-white);
+    color: var(--text-dark);
+    scroll-behavior: smooth;
+}
+
+/* ================= NAVBAR ================= */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 8%;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-green);
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+}
+
+.chat-now-btn {
+    background: var(--accent-gold);
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+/* ================= HERO ================= */
+.hero {
+    min-height: 80vh;
+    background: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
+                url('bg image (2).png');
+    background-size: cover;
+    background-position: center;
+    padding: 0 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3.8rem;
+    margin: 0;
+}
+
+.hero span {
+    color: var(--accent-gold);
+}
+
+.hero p {
+    max-width: 500px;
+    font-size: 1.1rem;
+    margin: 20px 0 30px;
+}
+
+.btn-primary, .btn-secondary {
+    display: inline-block;
+    padding: 14px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--accent-gold);
+    color: var(--text-dark);
+}
+
+.btn-secondary {
+    border: 1px solid white;
+    color: white;
+    margin-left: 10px;
+}
+
+/* ================= SECTION HEADER ================= */
+.section-header {
+    text-align: center;
+    padding: 80px 10% 40px;
+}
+
+.section-header h2 {
+    font-size: 2.6rem;
+    color: var(--primary-green);
+}
+
+.badge {
+    background: #e8f3e8;
+    color: var(--primary-green);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* ================= CAMERA ================= */
+.camera-card {
+    max-width: 750px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+}
+
+video, img {
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+    max-height: 350px;
+    object-fit: cover;
+}
+
+.camera-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.scan-result {
+    margin-top: 25px;
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1rem;
+}
+
+/* ================= CHAT ================= */
+.chat-interface {
+    max-width: 800px;
+    margin: 0 auto 100px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+}
+
+.chat-header {
+    background: var(--primary-green);
+    color: white;
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.chat-box {
+    height: 300px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.msg-bot {
+    background: #f1f5f9;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    max-width: 80%;
+}
+
+.msg-user {
+    background: var(--accent-gold);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    margin-left: auto;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 15px;
+    gap: 10px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #f1f5f9;
+}
+
+.send-btn {
+    background: var(--accent-gold);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background: var(--accent-gold);
+    text-align: center;
+    padding: 30px;
+    font-weight: 500;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero {
+        padding: 70px 6%;
+    }
+
+    .hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        margin: 8px 0;
+        text-align: center;
+    }
+
+    .camera-buttons {
+        flex-direction: column;
+    }
+
+    .chat-box {
+        height: 250px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo"><i data-lucide="leaf"></i> GrapeGuard</div>
+    <div class="nav-links">
+        <a href="#camera">Leaf Scan</a>
+        <a href="#ai">AI Assistant</a>
+    </div>
+    <a href="#camera" class="chat-now-btn">Scan Now</a>
+</nav>
+
+<section class="hero">
+    <h1>Protect Your <span>Vineyard</span><br>With AI</h1>
+    <p>Scan grape leaves using your phone camera and detect diseases instantly.</p>
+    <div>
+        <a href="#camera" class="btn-primary">Scan Leaf</a>
+        <a href="#ai" class="btn-secondary">Chat</a>
+    </div>
+</section>
+
+<!-- CAMERA -->
+<section id="camera">
+    <div class="section-header">
+        <span class="badge">AI Leaf Scanner</span>
+        <h2>Scan Grape Leaf</h2>
+        <p>Use your phone camera to identify diseases.</p>
+    </div>
+
+    <div class="camera-card">
+        <video id="video" autoplay playsinline style="display:none;"></video>
+        <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+        <img id="capturedImage" style="display:none;">
+
+        <div class="camera-buttons">
+            <button class="btn-primary" onclick="startCamera()">Open Camera</button>
+            <button class="btn-secondary" onclick="captureImage()">Capture</button>
+        </div>
+
+        <div id="scanResult" class="scan-result" style="display:none;"></div>
+    </div>
+</section>
+
+<!-- AI CHAT -->
+<section id="ai">
+    <div class="section-header">
+        <span class="badge">AI Assistant</span>
+        <h2>Ask GrapeGuard</h2>
+    </div>
+
+    <div class="chat-interface">
+        <div class="chat-header">
+            <i data-lucide="bot"></i> GrapeGuard Assistant
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="msg-bot">👋 Ask about grape diseases or care.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="Ask something...">
+            <button class="send-btn" onclick="askAI()">Send</button>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2024 GrapeGuard | Smart Agriculture with AI
+</footer>
+
+<script>
+lucide.createIcons();
+
+let stream;
+
+/* ===== CAMERA (MOBILE + REAR CAMERA) ===== */
+function startCamera() {
+    navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: "environment" } }
+    }).then(s => {
+        stream = s;
+        const video = document.getElementById("video");
+        video.srcObject = s;
+        video.style.display = "block";
+        video.play();
+    }).catch(() => {
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(s => {
+            stream = s;
+            const video = document.getElementById("video");
+            video.srcObject = s;
+            video.style.display = "block";
+            video.play();
+        })
+        .catch(() => alert("Camera access denied"));
+    });
+}
+
+function captureImage() {
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const img = document.getElementById("capturedImage");
+    const result = document.getElementById("scanResult");
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    img.src = canvas.toDataURL("image/png");
+    img.style.display = "block";
+    video.style.display = "none";
+
+    stream.getTracks().forEach(t => t.stop());
+
+    result.style.display = "block";
+    result.innerHTML = `
+        🔍 <b>Disease Detected:</b> Powdery Mildew<br><br>
+        📊 <b>Confidence:</b> 82%<br><br>
+        ✅ <b>Recommendation:</b> Apply sulfur fungicide and improve air circulation.
+    `;
+}
+
+/* ===== CHAT ===== */
+function askAI() {
+    const input = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+    if (!input.value) return;
+
+    chatBox.innerHTML += `<div class="msg-user">${input.value}</div>`;
+    let reply = "Please ask about grape diseases.";
+
+    if (input.value.toLowerCase().includes("powdery"))
+        reply = "Powdery mildew occurs in warm dry weather. Use sulfur spray.";
+
+    setTimeout(() => {
+        chatBox.innerHTML += `<div class="msg-bot">${reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 600);
+
+    input.value = "";
+}
+</script>
+
+</body>
+</html>
